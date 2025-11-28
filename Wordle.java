@@ -112,19 +112,25 @@ public class Wordle {
     // Returns true if all entries in resultRow are 'G'.
     public static boolean isAllGreen(char[] resultRow) {
 		
-        boolean allEntriesAreTrue = false;;
+        int counter = 0;
 
         for (int i = 0; i < resultRow.length; i ++) {
 
             if (resultRow[i] == 'G') {
                 
-                allEntriesAreTrue = true;
+                counter ++;
                 
             }
 
         }
 
-        return allEntriesAreTrue;
+        if (counter == 5) {
+
+            return true;
+
+        }
+
+        return false;
 
     }
 
