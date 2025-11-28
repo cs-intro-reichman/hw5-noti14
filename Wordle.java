@@ -3,7 +3,7 @@ public class Wordle {
     // Reads all words from dictionary filename into a String array.
     public static String[] readDictionary(String filename) {
 
-       In in = new In("filename");
+       In in = new In(filename);
        String allFileNames = in.readAll();
        String [] arr = allFileNames.split("\\s+");
 
@@ -43,35 +43,27 @@ public class Wordle {
     public static void computeFeedback(String secret, String guess, char[] resultRow) {
 
 
-        boolean contains = false;
-        int pos = 0;
+        for (int i = 0; i < 5; i ++) {
 
-        for (int i = 0; i < guess.length(); i ++) {
+            if (guess.charAt(i) == secret.charAt(i)) {
 
-            contains = containsChar(secret, guess.charAt(i));
+                resultRow[i] = 'G';
 
-            if (contains) {
+            } else  {
 
-                for (int j = 0; j < secret.length(); j ++) {
+                resultRow[i] = '_';
 
-                    if (secret.charAt(j) == guess.charAt(j))  {
+            }
 
-                        resultRow[pos] = 'G';
-                        pos ++;
+        }
 
-                    } else {
+        for (int j = 0; j < 5; j ++) {
 
-                        resultRow[pos] = 'Y';
-                        pos ++;
-                    }
+            if (resultRow[j] == 'G') continue;
 
-                }
+            if(containsChar(secret, guess.charAt(j))) {
 
-
-            }  else {
-
-                resultRow[pos] = '_';
-                pos ++;
+                resultRow[j] = 'Y';
 
             }
 
@@ -165,9 +157,9 @@ public class Wordle {
             // Loop until you read a valid guess
             while (!valid) {
                 System.out.print("Enter your guess (5-letter word): ");
-                guess = args[0];
+                guess = inp.readString().toUpperCase();
                 
-                if (guess.length() == 5) {
+                if (guess.length() != 5) {
                     System.out.println("Invalid word. Please try again.");
                 } else {
                     valid = true;
